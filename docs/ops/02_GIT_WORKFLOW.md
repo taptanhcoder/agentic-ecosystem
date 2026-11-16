@@ -51,3 +51,8 @@ If merge-base fails or histories are unrelated, STOP and reconcile by inspection
 ## Never do by default
 
 git push --force, git reset --hard, git clean -fdx, git rebase across unrelated histories, DB destructive migrations, or secret uploads.
+
+## Daily command reference
+
+See [solo Git quickstart](../runbooks/GIT.md) for clone-local settings, command examples,
+squash merging and tag conventions. `main` remains the only permanent branch.

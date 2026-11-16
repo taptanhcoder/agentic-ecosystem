@@ -3,29 +3,13 @@
 ## Branches
 
 `main` is the only permanent branch. Keep it usable and check CI after pushing.
-Small documentation/configuration changes may go directly to `main` after review.
-Use one short-lived branch and a pull request for features, refactors, or risky fixes.
+Use one short-lived branch and a pull request per task, including small changes.
+This follows [repository policy](../ops/02_GIT_WORKFLOW.md).
 No `develop`, staging branch, or release branch is needed at this stage.
 Use `feat/research-api`, `fix/document-parser`, or `chore/tooling`; Codex-created
 branches use `codex/<task>`. Delete the task branch after merging.
 
 ## Daily commands
-
-Small changes:
-
-```sh
-git switch main
-git pull --ff-only
-# Edit files and run the relevant checks from docs/runbooks/LOCAL.md.
-git status --short
-git diff
-git add <specific-files>
-git diff --cached
-git commit -m "docs: clarify local setup"
-git push
-```
-
-Larger changes:
 
 ```sh
 git switch main
@@ -95,12 +79,11 @@ Other machines should use their own credential manager or SSH setup.
 CI runs on pushes to `main`, PRs targeting `main`, and manual dispatch. New runs
 cancel superseded runs for the same PR/branch. Language checks are selected by
 changed paths; manual dispatch runs all language/contract checks.
-See [local checks](LOCAL.md). Inspect CI before continuing after a direct push.
+See [local checks](LOCAL.md). Inspect CI and review the diff before merging.
 
 This setup does not enforce server-side branch protection or merge settings.
-If you enable protection later, block force pushes/deletion of `main` and avoid
-requiring another reviewer for a solo project. Requiring PRs would also disable
-the direct-push workflow described above.
+If you enable protection later, block force pushes/deletion of `main`, require PRs,
+and avoid requiring another reviewer for a solo project.
 
 Keep `.env`, credentials, environments, build artifacts, and dependencies out of
 Git. `.env.example` contains only sample values. Review `git diff --cached` before
