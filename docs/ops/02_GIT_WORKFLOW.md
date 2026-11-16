@@ -25,7 +25,7 @@ If merge-base fails or histories are unrelated, STOP and reconcile by inspection
 ## Branch model
 
 - main: protected, reviewable, releasable only when appropriate gates pass.
-- docs/*, feat/*, fix/*, refactor/*, ops/*, experiment/*: short-lived feature branches.
+- docs/*, feat/*, fix/*, chore/*, refactor/*, ops/*, experiment/*: short-lived feature branches.
 - Avoid a permanent develop branch for one maintainer unless a concrete release-flow issue requires it.
 - Separate exploratory PoCs from application changes; expired branches should be closed after decision.
 
@@ -51,3 +51,8 @@ If merge-base fails or histories are unrelated, STOP and reconcile by inspection
 ## Never do by default
 
 git push --force, git reset --hard, git clean -fdx, git rebase across unrelated histories, DB destructive migrations, or secret uploads.
+
+## Daily command reference
+
+See [solo Git quickstart](../runbooks/GIT.md) for clone-local settings, command examples,
+squash merging and tag conventions. `main` remains the only permanent branch.

@@ -32,3 +32,7 @@ See [current baseline](docs/implementation/SETUP_BASELINE.md),
 [implementation map](docs/implementation/ROADMAP.md) and
 [frontend ADR](docs/adr/0002-frontend-boundaries.md). The existing JSON contract
 remains authoritative; no duplicate YAML contract or speculative dependencies.
+
+## Git workflow
+
+See [solo Git workflow](docs/runbooks/GIT.md) for branches, commits, PRs, and releases.
