@@ -1,9 +1,9 @@
 name: Foundation
 on:
   push:
-    branches: [main]
+    branches: [main, dev, 'release/**']
   pull_request:
-    branches: [main]
+    branches: [main, dev, 'release/**']
   workflow_dispatch:
 permissions:
   contents: read
@@ -26,7 +26,7 @@ jobs:
       - uses: dorny/paths-filter@v3
         id: filter
         with:
-          base: ${{ github.event.repository.default_branch }}
+          base: ${{ github.ref_name }}
           filters: |
             python:
               - 'domains/research/**'
@@ -52,7 +52,7 @@ jobs:
               - 'Makefile'
   python:
     needs: changes
-    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.python == 'true'
+    if: github.event_name == 'workflow_dispatch' || github.base_ref == 'main' || (github.event_name == 'push' && github.ref == 'refs/heads/main') || needs.changes.outputs.python == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -72,7 +72,7 @@ jobs:
       - run: python -m unittest discover -s tests/architecture -v
   contract:
     needs: changes
-    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.contract == 'true'
+    if: github.event_name == 'workflow_dispatch' || github.base_ref == 'main' || (github.event_name == 'push' && github.ref == 'refs/heads/main') || needs.changes.outputs.contract == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -84,7 +84,7 @@ jobs:
       - run: uv run --locked python scripts/validate_openapi.py
   go:
     needs: changes
-    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.go == 'true'
+    if: github.event_name == 'workflow_dispatch' || github.base_ref == 'main' || (github.event_name == 'push' && github.ref == 'refs/heads/main') || needs.changes.outputs.go == 'true'
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -100,7 +100,7 @@ jobs:
       - run: test -z "$(gofmt -l .)"
   rust:
     needs: changes
-    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.rust == 'true'
+    if: github.event_name == 'workflow_dispatch' || github.base_ref == 'main' || (github.event_name == 'push' && github.ref == 'refs/heads/main') || needs.changes.outputs.rust == 'true'
     runs-on: ubuntu-latest
     defaults:
       run:

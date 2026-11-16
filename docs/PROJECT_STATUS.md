@@ -35,3 +35,8 @@ model/profile and resource policy. Not executed or approved as a production choi
 
 Change log: AUD-00 created only SETUP_BASELINE.md and this ledger. No framework
 installations, reinitialization, refactor, feature, migration or service changes.
+
+Git workflow update 2026-11-16: VERIFIED dev created from main at 42610c6 and
+pushed to origin. Owner selected main/dev with short-lived task branches (ADR 0004).
+Updated CI/routing is pending PR validation; no remote protection or deployment
+is claimed configured.
