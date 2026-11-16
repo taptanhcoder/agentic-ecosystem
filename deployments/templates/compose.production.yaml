@@ -1,0 +1,29 @@
+# DOCUMENTATION TEMPLATE ONLY — NOT DEPLOYABLE until runtime/images/G5 exist.
+# Validation: docker compose --env-file deployments/templates/production.validation.env -f deployments/templates/compose.production.yaml config --quiet
+name: agentic-ecosystem
+services:
+  research-api:
+    image: ${RESEARCH_API_IMAGE:?Provide pinned image digest}
+    restart: unless-stopped
+    init: true
+    stop_grace_period: 30s
+    environment:
+      RESEARCH_HOST: '0.0.0.0'
+      RESEARCH_PORT: '8000'
+      DATABASE_URL: ${DATABASE_URL:?Provide database connection at runtime}
+      OTEL_SDK_DISABLED: ${OTEL_SDK_DISABLED:-true}
+    ports:
+      - '127.0.0.1:${RESEARCH_API_LOOPBACK_PORT:-8000}:8000'
+    networks: [internal]
+  research-worker:
+    image: ${RESEARCH_WORKER_IMAGE:?Provide pinned image digest}
+    restart: unless-stopped
+    init: true
+    stop_grace_period: 120s
+    environment:
+      DATABASE_URL: ${DATABASE_URL:?Provide database connection at runtime}
+      OTEL_SDK_DISABLED: ${OTEL_SDK_DISABLED:-true}
+    networks: [internal]
+networks:
+  internal:
+    driver: bridge
