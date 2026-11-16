@@ -1,0 +1,106 @@
+name: Foundation
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+  pull-requests: read
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      python: ${{ steps.filter.outputs.python }}
+      go: ${{ steps.filter.outputs.go }}
+      rust: ${{ steps.filter.outputs.rust }}
+      contract: ${{ steps.filter.outputs.contract }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          base: ${{ github.event.repository.default_branch }}
+          filters: |
+            python:
+              - 'domains/research/**'
+              - 'pyproject.toml'
+              - 'uv.lock'
+              - '.python-version'
+              - '.github/workflows/**'
+              - 'Makefile'
+            go:
+              - 'apps/gateway-go/**'
+              - '.github/workflows/**'
+              - 'Makefile'
+            rust:
+              - 'engines/document-rs/**'
+              - '.github/workflows/**'
+              - 'Makefile'
+            contract:
+              - 'contracts/**'
+              - 'scripts/validate_openapi.py'
+              - 'pyproject.toml'
+              - 'uv.lock'
+              - '.github/workflows/**'
+              - 'Makefile'
+  python:
+    needs: changes
+    if: needs.changes.outputs.python == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.9.10'
+          python-version: '3.12'
+      - run: uv sync --locked --all-packages
+      - run: uv run --locked python -m unittest discover -s domains/research/tests -v
+  architecture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s tests/architecture -v
+  contract:
+    needs: changes
+    if: needs.changes.outputs.contract == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.9.10'
+          python-version: '3.12'
+      - run: uv sync --locked
+      - run: uv run --locked python scripts/validate_openapi.py
+  go:
+    needs: changes
+    if: needs.changes.outputs.go == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/gateway-go
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23.6'
+          cache: false
+      - run: go test ./...
+      - run: go vet ./...
+      - run: test -z "$(gofmt -l .)"
+  rust:
+    needs: changes
+    if: needs.changes.outputs.rust == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: engines/document-rs
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup toolchain install 1.85.0 --profile minimal --component rustfmt
+      - run: cargo +1.85.0 test --locked --workspace
+      - run: cargo +1.85.0 fmt --all -- --check

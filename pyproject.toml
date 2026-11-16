@@ -1,0 +1,11 @@
+[project]
+name = "agentic-ecosystem"
+version = "0.0.0"
+requires-python = ">=3.12,<3.13"
+dependencies = []
+
+[tool.uv.workspace]
+members = ["domains/research"]
+
+[dependency-groups]
+dev = ["openapi-spec-validator==0.7.2"]

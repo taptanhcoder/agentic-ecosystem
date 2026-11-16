@@ -1,0 +1,28 @@
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+target/
+.coverage
+htmlcov/
+.local/
+*.log
+.DS_Store
+Thumbs.db
+
+# Frontend local dependencies and generated test/build output
+node_modules/
+.next/
+.vite/
+coverage/
+playwright-report/
+test-results/
+*.tsbuildinfo
