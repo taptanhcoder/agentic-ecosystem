@@ -4,7 +4,7 @@ Repo: https://github.com/taptanhcoder/agentic-ecosystem (public as observed 2026
 
 ## Settings baseline (proposed; NOT asserted configured)
 
-- Enable branch ruleset/protection for main. Block force pushes and deletion.
+- Enable branch ruleset/protection for main and dev. Block force pushes and deletion.
 - Require pull request before merge; for a solo owner do not require an impossible independent approval count. Use review checklist and CI as a compensating control until collaborators join.
 - Require checks that always run (existing architecture job, and ops-docs job after verified). Do NOT mark path-filtered jobs required if they are not guaranteed to report a status on every PR.
 - Keep repository Actions permissions least-privilege; default GITHUB_TOKEN read-only and grant package write only to future, isolated publishing workflow.
@@ -14,6 +14,10 @@ Repo: https://github.com/taptanhcoder/agentic-ecosystem (public as observed 2026
 - Configure staging and production GitHub Environments only when real environments exist. Production approvals and branch restrictions should be enforced before real deployment.
 - Use labels: type:feature, type:fix, type:docs, area:research, area:platform, area:infra, risk:high.
 - Optional: GitHub Projects board with Backlog, Ready, In Progress, Review, Verified, Blocked, Done.
+
+- Allow merge commits for dev/main promotion and squash for task PRs; do not require linear history.
+- Keep main as the default branch. Target routine task PRs at dev.
+- Keep automatic head-branch deletion disabled to preserve dev; delete merged task branches manually.
 
 ## PR protocol
 

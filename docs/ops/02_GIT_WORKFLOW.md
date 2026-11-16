@@ -22,23 +22,18 @@ If origin is absent, and only after confirming this is the right working tree:
 
 If merge-base fails or histories are unrelated, STOP and reconcile by inspection/new clone/patch; never push --force, reset --hard or overwrite local uncommitted source. If the local tree has no commits, back up/diff it against a clean clone and port only intended changes. Do not run git init again.
 
-## Branch model
+## Branch model and work sequence
 
-- main: protected, reviewable, releasable only when appropriate gates pass.
-- docs/*, feat/*, fix/*, chore/*, refactor/*, ops/*, experiment/*: short-lived feature branches.
-- Avoid a permanent develop branch for one maintainer unless a concrete release-flow issue requires it.
-- Separate exploratory PoCs from application changes; expired branches should be closed after decision.
+The owner selected `main` + `dev` on 2026-11-16. This supersedes the earlier
+single-permanent-branch quickstart. See [ADR 0004](../adr/0004-development-branch-workflow.md)
+and [daily workflow](../runbooks/GIT.md) for the authoritative branch routing table.
 
-## Git work sequence
-
-1. git status --short; inspect changes and the latest origin/main.
-2. Pick ticket and acceptance tests; create branch from an up-to-date local main with clean working tree.
-3. Make one coherent change; add tests, docs and evidence.
-4. Run relevant checks locally: make architecture; make python; make contract; make go; make rust (only when toolchains available).
-5. Inspect git diff --check and git diff --cached; ensure no secrets, large binaries or unrelated modifications.
-6. Commit with meaningful Conventional Commit, e.g. docs(ops): add delivery governance or feat(research): add lifecycle transitions.
-7. Push only the feature branch; open PR; inspect CI; merge after review and passing gates.
-8. After merge, update project ledger only with factual evidence.
+1. Fetch and update dev; create feature/fix/chore/docs/refactor branch from dev.
+2. Implement one task; inspect the diff and execute relevant checks.
+3. Push the task branch and open its PR into dev; self-review and inspect CI.
+4. Squash task PRs. Promote tested dev milestones into main with merge commits.
+5. Hotfixes start from main; merge into main, then synchronize main back to dev.
+6. Delete completed task branches; retain main and dev. Release branches are optional.
 
 ## Commit and PR policy
 
@@ -55,4 +50,4 @@ git push --force, git reset --hard, git clean -fdx, git rebase across unrelated 
 ## Daily command reference
 
 See [solo Git quickstart](../runbooks/GIT.md) for clone-local settings, command examples,
-squash merging and tag conventions. `main` remains the only permanent branch.
+squash merging and tag conventions. `main` and `dev` are the permanent branches.

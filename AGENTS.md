@@ -20,7 +20,7 @@ Repository-wide coding agent guidance. Before editing or running deployments:
 ## Repository / CI / release policy
 
 - Preserve existing setup; no repository reinitialization, force push, destructive migration or live deployment without explicit authorization.
-- Use feature branches and reviewable PRs. Do not claim CI or deployment passed without actual logs/evidence.
+- Use `feature/*`, `fix/*`, `chore/*` or other task branches from `dev` and PRs into `dev`; see docs/runbooks/GIT.md. Promote `dev` to `main` with merge commits, never squash. Hotfixes start from `main` and must be synchronized back to `dev`. Do not claim CI or deployment passed without actual logs/evidence.
 - The current GitHub Actions foundation workflow exists; service delivery is NOT production-ready.
 - docs/ops/DEPLOYMENT.md and deployments/templates/compose.production.yaml are architecture/templates, NOT a functioning release.
 - Never push production secrets; never enable automated production delivery without G5 approval and a reviewed release ADR.
