@@ -1,0 +1,22 @@
+name: Operations Policy & Template Validation
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ops-validation-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  ops-docs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout pinned version
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Validate operational documentation and manifest safeguards
+        run: python3 scripts/validate_ops_docs.py
+      - name: Compose template syntax check (no pull, no deploy)
+        run: docker compose --env-file deployments/templates/production.validation.env -f deployments/templates/compose.production.yaml config --quiet
