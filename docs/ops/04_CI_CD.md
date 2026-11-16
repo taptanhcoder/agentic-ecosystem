@@ -49,3 +49,11 @@ Current core entrypoints:
 The repo has NO running Research API/Worker or production Dockerfiles. There is therefore no truthful automatic production deployment workflow. The template in deployments/templates is validated as configuration only, not released or executed.
 
 See: https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax and https://docs.github.com/en/actions/reference/security/secure-use
+
+## Branch workflow update
+
+See [ADR 0004](../adr/0004-development-branch-workflow.md). Both workflows cover
+main, dev and release branches. Foundation uses the pushed branch as its comparison
+base for push change detection; PR detection uses the PR diff. Main-targeted PRs,
+main pushes and manual runs execute all language/contract jobs. Ordinary dev/task
+work retains path filtering. No automatic deployment is introduced.

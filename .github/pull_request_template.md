@@ -9,3 +9,9 @@
 
 - [ ] Reviewed the diff; no secrets or generated output included.
 - [ ] Relevant checks pass.
+
+## Branch and evidence
+
+- [ ] Correct target: task → dev; promotion/hotfix → main; synchronization → dev.
+- [ ] Squash task PRs; merge commits for promotion/hotfix/synchronization.
+- [ ] Model/prompt/retrieval changes include evaluation evidence when applicable.
