@@ -22,7 +22,7 @@ is retained; it is not current evidence.
 
 Git update 2026-11-16: source committed and pushed to origin/main (99b8a6a);
 operations policy merged via PR #1 (8d92a75). Solo Git setup is on
-`codex/solo-git-workflow`, pending PR/hosted CI verification.
+`chore/git-setup`, pending PR/hosted CI verification.
 VERIFIED locally: 7 architecture tests + 1 Python unit test, workflow YAML parse.
 IMPLEMENTED_UNVERIFIED: revised hosted Foundation workflow; remote protection
 settings have not been configured by this setup. Historical AUD-00 findings below

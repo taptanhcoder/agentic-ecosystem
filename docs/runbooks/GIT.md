@@ -6,8 +6,10 @@
 Use one short-lived branch and a pull request per task, including small changes.
 This follows [repository policy](../ops/02_GIT_WORKFLOW.md).
 No `develop`, staging branch, or release branch is needed at this stage.
-Use `feat/research-api`, `fix/document-parser`, or `chore/tooling`; Codex-created
-branches use `codex/<task>`. Delete the task branch after merging.
+Use `<type>/<short-description>` in lowercase kebab-case, describing the work:
+`feat/research-api`, `fix/document-parser`, `docs/setup-guide`, or `chore/git-setup`.
+Use the same naming convention for human and agent work. Delete the task branch
+after merging.
 
 ## Daily commands
 
