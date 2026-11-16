@@ -1,10 +1,16 @@
 name: Foundation
 on:
   push:
+    branches: [main]
   pull_request:
+    branches: [main]
+  workflow_dispatch:
 permissions:
   contents: read
   pull-requests: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 jobs:
   changes:
     runs-on: ubuntu-latest
@@ -46,7 +52,7 @@ jobs:
               - 'Makefile'
   python:
     needs: changes
-    if: needs.changes.outputs.python == 'true'
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.python == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -66,7 +72,7 @@ jobs:
       - run: python -m unittest discover -s tests/architecture -v
   contract:
     needs: changes
-    if: needs.changes.outputs.contract == 'true'
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.contract == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -78,7 +84,7 @@ jobs:
       - run: uv run --locked python scripts/validate_openapi.py
   go:
     needs: changes
-    if: needs.changes.outputs.go == 'true'
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.go == 'true'
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -94,7 +100,7 @@ jobs:
       - run: test -z "$(gofmt -l .)"
   rust:
     needs: changes
-    if: needs.changes.outputs.rust == 'true'
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.rust == 'true'
     runs-on: ubuntu-latest
     defaults:
       run:
