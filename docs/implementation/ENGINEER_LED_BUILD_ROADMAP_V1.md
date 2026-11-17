@@ -1,14 +1,27 @@
 # ENGINEER-LED BUILD ROADMAP — Agentic AI Ecosystem
 
 **Version:** 1.0 — 2026-11-16
-**Status:** PROPOSED ENGINEERING PLAN — NOT EXECUTION EVIDENCE
+**Status:** HISTORICAL REFERENCE — NOT THE ACTIVE DELIVERY PLAN OR EXECUTION EVIDENCE
 **Authoring model:** Solo Engineer owns ALL source implementation; AI acts as teacher, research assistant, reviewer, auditor and verifier by request only.
 **Repository:** taptanhcoder/agentic-ecosystem
 **Base:** feature branches from dev; PR to dev; milestone promotion dev → main (ADR-0004).
-**Languages:** Python, Go, Rust. Frontend framework is OPEN pending ADR; do not silently mandate TypeScript.
+**Languages:** Python, Go, Rust. Accepted ADR-0002 specifies TypeScript/React for the frontend; changing it requires an owner-approved superseding ADR.
 **Release roadmap:** R0 Durable Foundation → R1 Useful Research → R2 Advanced/Ecosystem Readiness.
 
 > IMPORTANT: This document is a development contract and a learning roadmap, not permission for any AI agent to implement the described code. The human engineer writes and runs application code, chooses dependencies, makes architecture decisions and approves merges. AI remains read-only unless the owner gives specific, scoped authorization.
+
+## Authority update — 2026-11-17
+
+This v1 plan is retained for detailed learning exercises and historical rationale.
+Use [Engineering Documentation Hub](../README.md),
+[Delivery Plan v2](ENGINEER_LED_DELIVERY_PLAN_V2.md), and
+[Document Reconciliation](DOCUMENT_RECONCILIATION.md) for current coordination.
+Its S0–S11 sequence, R0/R1/R2 labels, memory ownership and first coding cycles are
+historical proposals, not approval to implement or override the v2 M0–M6 milestones.
+Accepted ADRs retain authority; ADRs 0005–0007 remain proposed until owner approval.
+In particular, do not interpret S8 as approval for Research to own shared KB or
+personal Second Brain state. No application or architecture decision is approved
+merely by merging this reference document.
 
 ## 0. Verified starting point and scope constraints
 
@@ -19,7 +32,7 @@ Verified on the existing GitHub repo on 2026-11-16:
 - No Research persistence, durable queue, Worker, MAF execution, citation/evidence pipeline, memory, frontend app or production deployment has been verified.
 - Existing CI, PR workflow, ops docs and two permanent branches exist; setup should be audited and *reused*, not recreated.
 - Environment-specific gaps recorded in docs/SETUP_BASELINE.md (missing uv/cargo in old WSL audit) must be rechecked on current machine, never assumed unchanged.
-- docs/implementation/ROADMAP.md and an older frontend ADR mention React/TypeScript, but owner-selected three-language policy leaves the frontend choice OPEN. Resolve with ADR before frontend build.
+- ADR-0002 accepts TypeScript/React. Later OPEN recommendations do not override it; any change requires an approved superseding ADR.
 - Research must run independently of optional Go Gateway and Rust engine. There is no Global Orchestrator in Release 1.
 
 Evidence authority: actual source + test logs > approved ADR/contracts > latest PROJECT_STATUS + SETUP_BASELINE > planning docs. Do not rewrite history or fabricate completed gates.
@@ -76,7 +89,7 @@ No status is inferred from a README or passing mock alone. Use four states:
 | Python Agent Runtime | agentic (create when validated) | Direct global task state; duplicate business lifecycle |
 | Go Gateway | apps/gateway-go | Research-owned database writes or MAF internals |
 | Rust Processing | engines/document-rs | Research orchestration or direct Research database writes |
-| Frontend | independent application, technology OPEN | Research ORM/MAF/internal domain entities |
+| Frontend | independent application, ADR-0002 TypeScript/React | Research ORM/MAF/internal domain entities |
 | Contracts | contracts/openapi/research.v1.json | Implementation-specific serialized objects |
 
 Owners and public contracts are stable goals; directory additions are done only when a ticket needs them.
@@ -522,7 +535,7 @@ Do not launch deep research, frontend polish, Rust optimization or global orches
 
 ## 22. References, governance and update policy
 
-Read root AGENTS.md, docs/PROJECT_STATUS.md, docs/SETUP_BASELINE.md, docs/adr/0001–0004, docs/ops, then this plan and current source. Older plans and frontend ADR are historical proposals where conflicting; log a superseding ADR before changing framework/frontend boundaries.
+Read root AGENTS.md, docs/PROJECT_STATUS.md, docs/SETUP_BASELINE.md, docs/adr/0001–0004, docs/ops, then this plan and current source. Older plans are historical proposals; accepted ADRs remain authoritative. An owner-approved superseding ADR is required before changing framework/frontend boundaries.
 
 When completing a ticket, update docs/PROJECT_STATUS.md with verified status and evidence; if priorities/ownership change, update this plan through a reviewed docs PR. Never backdate tests or silently relabel a planned component implemented.
 

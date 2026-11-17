@@ -52,3 +52,9 @@ Version naming: The old Master Plan v2 used R0 for an end-to-end useful research
 ## Policy on changing docs
 
 Owner approves product/business boundaries and accepted ADR changes. Codex can prepare docs when asked, but must not edit application source, dependencies, CI, production settings or issue state without scoped approval. Link verified tests from actual runs; no invented performance numbers, service endpoints or deployed URLs.
+
+## Historical engineering exercises
+
+[Build Roadmap v1](implementation/ENGINEER_LED_BUILD_ROADMAP_V1.md) preserves detailed
+learning exercises. Its ordering and ownership assumptions are historical; use
+Delivery Plan v2 for coordination and accepted ADRs for decisions.
